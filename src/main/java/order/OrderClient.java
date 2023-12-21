@@ -44,7 +44,7 @@ public class OrderClient {
     }
 
     @Step("Получение списка заказов")
-    public Response check() {
+    public Response getOrderList() {
         return given()
                 .header("Content-type", "application/json")
                 .get(CHECK_ORDER_URL);

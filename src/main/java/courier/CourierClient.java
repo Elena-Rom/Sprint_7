@@ -4,7 +4,6 @@ import models.courier.CourierData;
 import models.courier.CourierLogin;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
-import models.courier.SimpleExample;
 
 import static io.restassured.RestAssured.given;
 
@@ -25,7 +24,7 @@ public class CourierClient {
                 .post(COURIER_URL);
     }
 
-    @Step("Авторизация курьером с кредами {courierCreds}")
+    @Step("Авторизация курьером")
     public Response login(CourierData courierData) {
         return given()
                 .header("Content-type", "application/json")
@@ -34,7 +33,7 @@ public class CourierClient {
                 .when()
                 .post(COURIER_LOGIN_URL);
     }
-    @Step("Авторизация курьером с кредами {courierCreds}")
+    @Step("Авторизация курьером")
     public Response loginIn(CourierLogin courierLogin) {
         return given()
                 .header("Content-type", "application/json")
@@ -44,22 +43,12 @@ public class CourierClient {
                 .post(COURIER_LOGIN_URL);
     }
 
-    public Integer getCourierId(CourierData courierData){
-        SimpleExample example = given()
-                .header("Content-type", "application/json")
-                .body(courierData)
-                .post(COURIER_LOGIN_URL)
-                .as(SimpleExample.class);
-                return example.getId();
-
-    }
-
     @Step("Удаление {courier}")
-    public Response delete(CourierData courierData) {
+    public Response delete(int id) {
         return given()
                 .header("Content-type", "application/json")
                 .and()
-                .body(getCourierId(courierData))
+                .body(id)
                 .when()
                 .delete(COURIER_DELETE_URL);
 
